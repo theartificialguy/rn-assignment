@@ -133,6 +133,7 @@ const SignIn = () => {
                         placeholder="Email"
                         value={email}
                         onChangeText={setEmail}
+                        style={{ textAlign: 'center' }}
                     />
                     <TextInput
                         placeholder="Password"

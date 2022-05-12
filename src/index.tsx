@@ -15,7 +15,6 @@ const EntryPoint = () => {
 
     useEffect(() => {
         onAuthStateChanged(auth, result => {
-            dispatch(loading(true));
             if (result) {
                 const path = doc(db, 'users', result.uid);
                 getDoc(path)
