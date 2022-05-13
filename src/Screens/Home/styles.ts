@@ -1,9 +1,11 @@
 import { StyleSheet } from "react-native"
+import { theme } from "../../utils/theme"
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 15,
+        backgroundColor: theme.background,
     },
     headerContainer: {
         flexDirection: 'row',
@@ -11,6 +13,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     text: {
+        color: 'black',
         fontSize: 16,
         fontWeight: '600',
         marginVertical: 1,
@@ -35,11 +38,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'lightgrey',
+        backgroundColor: '#E9E9E9',
     },
     addressText: {
         fontSize: 15,
-        fontWeight: '500',
         color: 'grey',
     },
     addContainer: {

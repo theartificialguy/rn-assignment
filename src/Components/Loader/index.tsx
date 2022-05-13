@@ -1,14 +1,12 @@
-import { View, ActivityIndicator, StatusBar } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import React from 'react';
 import styles from './styles';
+import Statusbar from '../Statusbar';
 
 const Loader = () => {
     return (
         <View style={styles.container}>
-            <StatusBar
-                barStyle={'dark-content'}
-                backgroundColor="transparent"
-            />
+            <Statusbar />
             <ActivityIndicator size={'large'} color="blue" />
         </View>
     );

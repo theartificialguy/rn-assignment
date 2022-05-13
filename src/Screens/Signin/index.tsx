@@ -4,7 +4,6 @@ import {
     TextInput,
     Button,
     TouchableOpacity,
-    StatusBar,
     Image,
 } from 'react-native';
 import React, { useState } from 'react';
@@ -16,6 +15,7 @@ import Loader from '../../Components/Loader';
 import CustomButton from '../../Components/CustomButton';
 import { getImageFromCamera, getImageFromGallery } from '../../utils/functions';
 import { loginUser, registerUser } from '../../utils/auth';
+import Statusbar from '../../Components/Statusbar';
 
 const SignIn = () => {
     const dispatch = useDispatch();
@@ -37,10 +37,7 @@ const SignIn = () => {
 
     return (
         <View style={styles.container}>
-            <StatusBar
-                barStyle={'dark-content'}
-                backgroundColor="transparent"
-            />
+            <Statusbar />
             {registerOrLogin ? (
                 <>
                     <TouchableOpacity onPress={toggleRegisterOrLogin}>
@@ -94,6 +91,7 @@ const SignIn = () => {
                         placeholder="Email"
                         value={email}
                         onChangeText={setEmail}
+                        placeholderTextColor='black'
                     />
                     <TextInput
                         placeholder="Password"
@@ -101,11 +99,13 @@ const SignIn = () => {
                         secureTextEntry={true}
                         onChangeText={setPassword}
                         style={{ textAlign: 'center' }}
+                        placeholderTextColor='black'
                     />
                     <TextInput
                         placeholder="Phone Number"
                         value={phone}
                         onChangeText={setPhone}
+                        placeholderTextColor='black'
                     />
 
                     <Button
@@ -134,6 +134,7 @@ const SignIn = () => {
                         value={email}
                         onChangeText={setEmail}
                         style={{ textAlign: 'center' }}
+                        placeholderTextColor='black'
                     />
                     <TextInput
                         placeholder="Password"
@@ -141,6 +142,7 @@ const SignIn = () => {
                         secureTextEntry={true}
                         onChangeText={setPassword}
                         style={{ textAlign: 'center' }}
+                        placeholderTextColor='black'
                     />
 
                     <Button

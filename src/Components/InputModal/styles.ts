@@ -6,8 +6,9 @@ const styles = StyleSheet.create({
         paddingTop: 15,
     },
     textinput: {
-        borderBottomWidth: 2,
-        borderBottomColor: 'blue',
+        color: 'black',
+        borderBottomWidth: 1,
+        borderBottomColor: 'lightgrey',
     },
     modalBg: {
         flex: 1,
@@ -28,6 +29,21 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 14,
         fontWeight: '500',
+    },
+    location: {
+        marginTop: 20,
+        padding: 10,
+        borderRadius: 7,
+        borderWidth: 1,
+        borderColor: 'lightgrey',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#E9E9E9',
+    },
+    locationText: {
+        fontSize: 15,
+        color: 'grey',
+        fontWeight: '400',
     },
 });
 

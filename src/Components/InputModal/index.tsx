@@ -1,5 +1,4 @@
 import {
-    Modal,
     StyleSheet,
     TextInput,
     TouchableWithoutFeedback,
@@ -7,48 +6,82 @@ import {
     Keyboard,
     TouchableOpacity,
     Text,
+    Alert,
 } from 'react-native';
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+
+import { theme } from '../../utils/theme';
+import Statusbar from '../Statusbar';
 import styles from './styles';
 
-const InputModal = ({ visible, onClose, onSubmit }) => {
+const InputModalScreen = ({ route }) => {
+    const navigation = useNavigation();
+    const { onSubmit } = route.params;
+
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
+    // const [address, setAddress] = useState('');
+    const [coords, setCoords] = useState(null);
 
     const handleModalClose = () => {
         Keyboard.dismiss();
     };
 
     const handleSubmit = async () => {
-        if (!name.trim() && !phone.trim()) return onClose();
-        onSubmit(name, phone);
+        if (name.trim() === '' || phone.trim() === '' || !coords) {
+            Alert.alert('Please enter all details.')
+            return;
+        }
+        onSubmit(name, phone, JSON.stringify(coords));
         setName('');
         setPhone('');
-        onClose();
+        setCoords(null);
+        navigation.goBack();
     };
 
     const handleCancel = () => {
         setName('');
         setPhone('');
-        onClose();
+        setCoords(null);
+        navigation.goBack();
     };
 
     return (
-        <Modal visible={visible} animationType="slide">
+        <View style={{ flex: 1, backgroundColor: theme.background }}>
+            <Statusbar />
             <View style={styles.container}>
                 <TextInput
                     style={styles.textinput}
                     placeholder="Enter Name"
                     value={name}
+                    placeholderTextColor='grey'
                     onChangeText={setName}
                 />
                 <TextInput
                     style={styles.textinput}
                     placeholder="Enter Phone Number"
                     value={phone}
+                    placeholderTextColor='grey'
                     onChangeText={setPhone}
                 />
-                <TextInput style={styles.textinput} placeholder="Add Address" />
+                {
+                    coords && (
+                        <View>
+                            <Text>Location added</Text>
+                            <Text>Lat: {coords.latitude}</Text>
+                            <Text>Long: {coords.longitude}</Text>
+                        </View>
+                    )
+                }
+                <TouchableOpacity
+                    activeOpacity={0.5}
+                    style={styles.location}
+                    onPress={() => navigation.navigate('Map', { setCoords })}>
+                    <Text style={styles.locationText}>
+                        Choose your Location
+                    </Text>
+                </TouchableOpacity>
 
                 <View style={styles.btnsContainer}>
                     <TouchableOpacity
@@ -71,8 +104,8 @@ const InputModal = ({ visible, onClose, onSubmit }) => {
             <TouchableWithoutFeedback onPress={handleModalClose}>
                 <View style={[styles.modalBg, StyleSheet.absoluteFillObject]} />
             </TouchableWithoutFeedback>
-        </Modal>
+        </View>
     );
 };
 
-export default InputModal;
+export default InputModalScreen;

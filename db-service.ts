@@ -16,7 +16,7 @@ export const getDBConnection = async () => {
 export const createTable = async (db: SQLiteDatabase) => {
     // create table if not exists
     const query = `CREATE TABLE IF NOT EXISTS ${tableName}(
-          ID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, phone TEXT
+          id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, phone TEXT, coords TEXT
       );`;
 
     await db.executeSql(query);
@@ -26,7 +26,7 @@ export const getRecords = async (db: SQLiteDatabase): Promise<RecordItem[]> => {
     try {
         const records: RecordItem[] = [];
         const results = await db.executeSql(
-            `SELECT id,name,phone FROM ${tableName}`,
+            `SELECT id,name,phone,coords FROM ${tableName}`,
         );
         results.forEach(result => {
             for (let index = 0; index < result.rows.length; index++) {
@@ -45,8 +45,8 @@ export const saveRecords = async (
     records: RecordItem[],
 ) => {
     const insertQuery =
-        `INSERT OR REPLACE INTO ${tableName}(rowid, name, phone) VALUES ` +
-        records.map(i => `(${i.id}, '${i.name}', '${i.phone}')`).join(',');
+        `INSERT OR REPLACE INTO ${tableName}(rowid, name, phone, coords) VALUES ` +
+        records.map(i => `(${i.id}, '${i.name}', '${i.phone}', '${i.coords}')`).join(',');
 
     return db.executeSql(insertQuery);
 };

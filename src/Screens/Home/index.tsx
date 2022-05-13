@@ -1,7 +1,6 @@
 import {
     View,
     Text,
-    StatusBar,
     Image,
     FlatList,
     TouchableOpacity,
@@ -9,20 +8,20 @@ import {
 import React, { useCallback, useEffect, useState } from 'react';
 import { auth } from '../../../firebase/firebase-config';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
+import Statusbar from '../../Components/Statusbar';
 import styles from './styles';
-import FloatingButton from '../../Components/FLoatingButton';
 import { signOut } from '../../utils/auth';
-import InputModal from '../../Components/InputModal';
 import { RecordItem } from '../../models';
 import Record from '../../Components/Record';
 import { createTable, getDBConnection, getRecords } from '../../../db-service';
 import { addRecord } from '../../utils/functions';
 
 const Home = () => {
+    const navigation = useNavigation();
     const dispatch = useDispatch();
     const user = useSelector(state => state.auth.user);
-    const [modalVisible, setModalVisible] = useState(false);
 
     const [records, setRecords] = useState<RecordItem[]>([]);
 
@@ -42,10 +41,10 @@ const Home = () => {
 
     useEffect(() => {
         loadRecords();
-    }, [loadRecords]);
+    }, [loadRecords]);    
 
-    const handleSubmit = async (name: string, phone: string) => {
-        const _record = { name, phone };
+    const handleSubmit = async (name: string, phone: string, coords: object) => {
+        const _record = { name, phone, coords };
         await addRecord(_record, records, setRecords);
     };
 
@@ -60,10 +59,7 @@ const Home = () => {
 
     return (
         <View style={styles.container}>
-            <StatusBar
-                barStyle={'dark-content'}
-                backgroundColor="transparent"
-            />
+            <Statusbar />
             {/* header */}
             <View style={styles.headerContainer}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -101,18 +97,14 @@ const Home = () => {
                 <TouchableOpacity
                     activeOpacity={0.6}
                     style={styles.addContainer}
-                    onPress={() => setModalVisible(true)}>
+                    onPress={() =>
+                        navigation.navigate('InputModalScreen', {
+                            onSubmit: handleSubmit,
+                        })
+                    }>
                     <Text style={styles.add}>+</Text>
                 </TouchableOpacity>
             </View>
-
-            {/* <FloatingButton setModalVisible={setModalVisible} /> */}
-
-            <InputModal
-                visible={modalVisible}
-                onClose={() => setModalVisible(false)}
-                onSubmit={handleSubmit}
-            />
 
             {/* Records */}
             <FlatList
