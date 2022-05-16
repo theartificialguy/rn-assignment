@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
       },
+      backBtnContainer: {
+        padding: 5,
+        justifyContent: 'center',
+      },
 });
 
 export default styles;

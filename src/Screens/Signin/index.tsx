@@ -91,6 +91,7 @@ const SignIn = () => {
                         placeholder="Email"
                         value={email}
                         onChangeText={setEmail}
+                        style={{ textAlign: 'center', color: 'black' }}
                         placeholderTextColor='black'
                     />
                     <TextInput
@@ -99,13 +100,13 @@ const SignIn = () => {
                         secureTextEntry={true}
                         onChangeText={setPassword}
                         style={{ textAlign: 'center' }}
-                        placeholderTextColor='black'
+                        placeholderTextColor='lightgrey'
                     />
                     <TextInput
                         placeholder="Phone Number"
                         value={phone}
                         onChangeText={setPhone}
-                        placeholderTextColor='black'
+                        placeholderTextColor='lightgrey'
                     />
 
                     <Button
@@ -133,16 +134,16 @@ const SignIn = () => {
                         placeholder="Email"
                         value={email}
                         onChangeText={setEmail}
-                        style={{ textAlign: 'center' }}
-                        placeholderTextColor='black'
+                        style={{ textAlign: 'center', color: 'black' }}
+                        placeholderTextColor='lightgrey'
                     />
                     <TextInput
                         placeholder="Password"
                         value={password}
                         secureTextEntry={true}
                         onChangeText={setPassword}
-                        style={{ textAlign: 'center' }}
-                        placeholderTextColor='black'
+                        style={{ textAlign: 'center', color: 'black' }}
+                        placeholderTextColor='lightgrey'
                     />
 
                     <Button

@@ -67,10 +67,9 @@ const InputModalScreen = ({ route }) => {
                 />
                 {
                     coords && (
-                        <View>
-                            <Text>Location added</Text>
-                            <Text>Lat: {coords.latitude}</Text>
-                            <Text>Long: {coords.longitude}</Text>
+                        <View style={styles.locationContainer}>
+                            <Text style={styles.locationText}>Location added</Text>
+                            <Text style={{ color: 'black' }}>{coords?.address?.display_name}</Text>
                         </View>
                     )
                 }

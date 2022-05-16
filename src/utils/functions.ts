@@ -8,7 +8,8 @@ import {
     getDBConnection,
     saveRecords,
 } from '../../db-service';
-import { GEODECODING_API_URL } from '../utils/constants';
+import { GEODECODING_API_BASE_URL } from '../utils/constants';
+import { RecordItem } from '../models';
 
 export const getImageFromGallery = (setImgUrl, setProgresspercent) => {
     return () => {
@@ -129,7 +130,7 @@ export const addRecord = async (record, records, setRecords) => {
     }
 };
 
-export const deleteRecord = async (id: number, records, setRecords) => {
+export const deleteRecord = async (id: number, records: RecordItem[], setRecords) => {
     try {
         const db = await getDBConnection();
         await deleteRecordItem(db, id);
@@ -140,33 +141,13 @@ export const deleteRecord = async (id: number, records, setRecords) => {
     }
 };
 
-export const getAddressFromCoordinates = async (latitude, longitude) => {
-    const uri = `${GEODECODING_API_URL}${latitude},${longitude}`;
+export const getAddressFromCoordinates = async (latitude: number, longitude: number) => {
+    const uri = `${GEODECODING_API_BASE_URL}/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`;
     try {
         const response = await fetch(uri);
-        const result = await response.text();
-        console.log(result);
+        const result = await response.json();
+        return result;
     } catch (error) {
         console.log('Error in getAddressFromCoordinates', error);
     }
-//     fetch(url)
-//         .then(res => res.json())
-//         .then(resJson => {
-//             if (
-//                 resJson &&
-//                 resJson.Response &&
-//                 resJson.Response.View &&
-//                 resJson.Response.View[0] &&
-//                 resJson.Response.View[0].Result &&
-//                 resJson.Response.View[0].Result[0]
-//             ) {
-//                 resolve(
-//                     resJson.Response.View[0].Result[0].Location.Address.Label,
-//                 );
-//             } else {
-//             }
-//         })
-//         .catch(e => {
-//             console.log('Error in getAddressFromCoordinates', e);
-//         });
 };

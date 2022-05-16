@@ -1,21 +1,28 @@
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 
-// import { getAddressFromCoordinates } from '../../utils/functions'
 import Statusbar from '../Statusbar';
 import styles from './styles';
+import { getAddressFromCoordinates } from '../../utils/functions';
 
 const Map = ({ route, navigation }) => {
     const { setCoords } = route.params;
+    const [decodedAddress, setDecodedAddress] = useState('');
     const [position, setPosition] = useState({
         latitude: 10,
         longitude: 10,
         latitudeDelta: 0.001,
         longitudeDelta: 0.001,
     });
+
+    const setAddress = async () => {
+        const address = await getAddressFromCoordinates(position.latitude, position.longitude);
+        setDecodedAddress(address);
+    }
 
     useEffect(() => {
         try {
@@ -29,25 +36,39 @@ const Map = ({ route, navigation }) => {
                 });
             });
             // decode coordinates
-            // getAddressFromCoordinates(position.latitude, position.longitude);
+            setAddress();
         } catch (error) {
             console.log('error while getting current location');
         }
     }, []);
 
     const setCoordinates = () => {
-      setCoords({
-        latitude: position.latitude,
-        longitude: position.longitude,
-      });
-      navigation.goBack();
-    }
+        setCoords({
+            latitude: position.latitude,
+            longitude: position.longitude,
+            address: decodedAddress,
+        });
+        navigation.goBack();
+    };
 
     return (
         <View style={styles.container}>
             <Statusbar />
             <View style={styles.searchContainer}>
                 <GooglePlacesAutocomplete
+                    renderLeftButton={() => (
+                        <TouchableOpacity
+                            activeOpacity={0.5}
+                            style={styles.backBtnContainer}
+                            onPress={() => navigation.goBack()}>
+                            <Ionicon
+                                name="chevron-back"
+                                color="grey"
+                                size={30}
+                            />
+                        </TouchableOpacity>
+                    )}
+                    debounce={600}
                     placeholder="Search"
                     styles={{ textInput: { color: 'black' } }}
                     onPress={(data, details = null) => {
@@ -74,9 +95,7 @@ const Map = ({ route, navigation }) => {
                 pitchEnabled={true}
                 rotateEnabled={true}>
                 <Marker
-                    title={`You are here lat: ${Math.round(
-                        position.latitude,
-                    )}, long: ${Math.round(position.longitude)} `}
+                    title={decodedAddress?.display_name}
                     coordinate={position}
                 />
             </MapView>

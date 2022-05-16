@@ -45,6 +45,10 @@ const styles = StyleSheet.create({
         color: 'grey',
         fontWeight: '400',
     },
+    locationContainer: {
+        margin: 5,
+        marginTop: 10,
+    },
 });
 
 export default styles;

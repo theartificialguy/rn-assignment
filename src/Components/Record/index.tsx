@@ -6,14 +6,13 @@ import styles from './styles';
 import { deleteRecord } from '../../utils/functions';
 
 const Record = ({ data, records, setRecords }) => {
-    const { latitude, longitude } = JSON.parse(data.coords)
+    const { address } = JSON.parse(data.coords)
     return (
         <View style={styles.container}>
             <View>
                 <Text style={styles.title}>{data.name}</Text>
                 <Text style={styles.desc}>{data.phone}</Text>
-                <Text style={styles.desc}>Lat: {latitude}</Text>
-                <Text style={styles.desc}>Long: {longitude}</Text>
+                <Text style={styles.desc}>{address?.display_name}</Text>
             </View>
             <TouchableOpacity
                 activeOpacity={0.4}

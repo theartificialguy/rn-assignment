@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     },
     add: {
         color: 'white',
-        fontSize: 26,
+        fontSize: 24,
     },
     logoutText: {
         fontSize: 15,
