@@ -21,7 +21,6 @@ const InputModalScreen = ({ route }) => {
 
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
-    // const [address, setAddress] = useState('');
     const [coords, setCoords] = useState(null);
 
     const handleModalClose = () => {

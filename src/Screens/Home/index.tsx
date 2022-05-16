@@ -1,10 +1,4 @@
-import {
-    View,
-    Text,
-    Image,
-    FlatList,
-    TouchableOpacity,
-} from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { auth } from '../../../firebase/firebase-config';
 import { useDispatch, useSelector } from 'react-redux';
@@ -41,9 +35,13 @@ const Home = () => {
 
     useEffect(() => {
         loadRecords();
-    }, [loadRecords]);    
+    }, [loadRecords]);
 
-    const handleSubmit = async (name: string, phone: string, coords: object) => {
+    const handleSubmit = async (
+        name: string,
+        phone: string,
+        coords: object,
+    ) => {
         const _record = { name, phone, coords };
         await addRecord(_record, records, setRecords);
     };
@@ -56,6 +54,10 @@ const Home = () => {
             setRecords={setRecords}
         />
     );
+
+    const goToMapScreen = () => {
+        navigation.navigate('MapScreen', { records });
+    };
 
     return (
         <View style={styles.container}>
@@ -90,7 +92,10 @@ const Home = () => {
 
             {/* body */}
             <View style={styles.btnsContainer}>
-                <TouchableOpacity activeOpacity={0.6} style={styles.addressBtn}>
+                <TouchableOpacity
+                    activeOpacity={0.6}
+                    style={styles.addressBtn}
+                    onPress={goToMapScreen}>
                     <Text style={styles.addressText}>show all addresses</Text>
                 </TouchableOpacity>
 

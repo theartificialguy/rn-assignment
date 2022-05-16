@@ -8,6 +8,7 @@ import SignIn from './Screens/Signin';
 import Loader from './Components/Loader';
 import InputModalScreen from './Components/InputModal';
 import Map from './Components/Map';
+import MapScreen from './Screens/Map';
 import { doc, getDoc } from 'firebase/firestore';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -56,6 +57,7 @@ const EntryPoint = () => {
                 <Stack.Screen name="SignIn" component={SignIn} />
             )}
             <Stack.Screen name="Map" component={Map} />
+            <Stack.Screen name='MapScreen' component={MapScreen} />
             <Stack.Screen name="InputModalScreen" component={InputModalScreen} />
         </Stack.Navigator>
     );
