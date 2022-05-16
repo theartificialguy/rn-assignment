@@ -33,10 +33,7 @@ const InputModalScreen = ({ route }) => {
             return;
         }
         onSubmit(name, phone, JSON.stringify(coords));
-        setName('');
-        setPhone('');
-        setCoords(null);
-        navigation.goBack();
+        handleCancel();
     };
 
     const handleCancel = () => {

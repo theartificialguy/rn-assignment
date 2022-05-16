@@ -9,7 +9,7 @@ const Record = ({ data, records, setRecords }) => {
     const { address } = JSON.parse(data.coords)
     return (
         <View style={styles.container}>
-            <View>
+            <View style={{ flex: 0.9 }}>
                 <Text style={styles.title}>{data.name}</Text>
                 <Text style={styles.desc}>{data.phone}</Text>
                 <Text style={styles.desc}>{address?.display_name}</Text>
