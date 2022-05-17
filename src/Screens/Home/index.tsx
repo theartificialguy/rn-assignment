@@ -17,10 +17,6 @@ const Home = () => {
 
     const renderItem = ({ item }) => <Record key={item.id} data={item} />;
 
-    const goToMapScreen = () => {
-        navigation.navigate('MapScreen', { records });
-    };
-
     return (
         <View style={styles.container}>
             <Statusbar />
@@ -57,7 +53,7 @@ const Home = () => {
                 <TouchableOpacity
                     activeOpacity={0.6}
                     style={styles.addressBtn}
-                    onPress={goToMapScreen}>
+                    onPress={() => navigation.navigate('MapScreen')}>
                     <Text style={styles.addressText}>show all addresses</Text>
                 </TouchableOpacity>
 

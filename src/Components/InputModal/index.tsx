@@ -86,7 +86,7 @@ const InputModalScreen = () => {
                         <Text style={styles.text}>Submit</Text>
                     </TouchableOpacity>
 
-                    {name.trim() || phone.trim() ? (
+                    {name.trim() || phone.trim() || coords ? (
                         <TouchableOpacity
                             style={[styles.btn, { backgroundColor: 'red' }]}
                             activeOpacity={0.7}

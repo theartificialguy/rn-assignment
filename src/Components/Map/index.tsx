@@ -26,17 +26,20 @@ const Map = ({ route, navigation }) => {
 
     useEffect(() => {
         try {
-            Geolocation.getCurrentPosition(pos => {
-                const crd = pos.coords;
-                setPosition({
-                    latitude: crd.latitude,
-                    longitude: crd.longitude,
-                    latitudeDelta: 0.0421,
-                    longitudeDelta: 0.0421,
+            const getLocation = async () => {
+                Geolocation.getCurrentPosition(pos => {
+                    const crd = pos.coords;
+                    setPosition({
+                        latitude: crd.latitude,
+                        longitude: crd.longitude,
+                        latitudeDelta: 0.0421,
+                        longitudeDelta: 0.0421,
+                    });
                 });
-            });
-            // decode coordinates
-            setAddress();
+                // decode coordinates
+                await setAddress();
+            }
+            getLocation();
         } catch (error) {
             console.log('error while getting current location');
         }

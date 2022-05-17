@@ -3,13 +3,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { storage } from '../../firebase/firebase-config';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-import {
-    deleteRecordItem,
-    getDBConnection,
-    saveRecords,
-} from '../../db-service';
 import { GEODECODING_API_BASE_URL } from '../utils/constants';
-import { RecordItem } from '../models';
 
 export const getImageFromGallery = (setImgUrl, setProgresspercent) => {
     return () => {
@@ -103,42 +97,6 @@ export const getImageFromCamera = (setImgUrl, setProgresspercent) => {
             },
         );
     };
-};
-
-export const addRecord = async (record, records, setRecords) => {
-    if (record === {}) return;
-    try {
-        const newRecords = [
-            ...records,
-            {
-                id: records.length
-                    ? records.reduce((acc, curr) => {
-                          if (curr.id > acc.id) return curr;
-                          return acc;
-                      }).id + 1
-                    : 0,
-                name: record.name,
-                phone: record.phone,
-                coords: record.coords,
-            },
-        ];
-        setRecords(newRecords);
-        const db = await getDBConnection();
-        await saveRecords(db, newRecords);
-    } catch (error) {
-        console.log('error when trying to add record: ', error);
-    }
-};
-
-export const deleteRecord = async (id: number, records: RecordItem[], setRecords) => {
-    try {
-        const db = await getDBConnection();
-        await deleteRecordItem(db, id);
-        records.splice(id, 1);
-        setRecords(records.slice(0));
-    } catch (error) {
-        console.log('error when trying to delete record: ', error);
-    }
 };
 
 export const getAddressFromCoordinates = async (latitude: number, longitude: number) => {

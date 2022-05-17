@@ -1,24 +1,21 @@
 import { View } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import styles from './styles';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Statusbar from '../../Components/Statusbar';
 
-const Map = ({ route }) => {
-    const { records } = route.params;
+const Map = () => {
+    const records = useSelector(state => state.realm.records);
     const [parsedRecords, setParsedRecords] = useState([]);
 
     useEffect(() => {
         const _parsedRecords = records.map(item => {
-            let data = item?.coords;
-            data = JSON.parse(data);
-            const { address } = data;
+            const address = JSON.parse(item?.address);
             return {
-                latitude: data?.latitude,
-                longitude: data?.longitude,
-                latitudeDelta: 0.001,
-                longitudeDelta: 0.001,
+                latitude: address?.latitude,
+                longitude: address?.longitude,
                 place: address?.display_name,
             };
         });

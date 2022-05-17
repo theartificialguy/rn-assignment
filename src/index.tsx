@@ -50,6 +50,7 @@ const EntryPoint = () => {
     // initial fetch from realm
     useEffect(() => {
         realm.then(realmObject => {
+            // initial fetch from realm
             const records = realmObject.objects('Record');
             dispatch(setRecords([...records]));
 
