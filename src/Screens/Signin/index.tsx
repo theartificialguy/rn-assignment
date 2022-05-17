@@ -88,25 +88,26 @@ const SignIn = () => {
                     )}
 
                     <TextInput
-                        placeholder="Email"
+                        placeholder="Enter Email"
                         value={email}
                         onChangeText={setEmail}
                         style={{ textAlign: 'center', color: 'black' }}
-                        placeholderTextColor='black'
+                        placeholderTextColor='lightgrey'
                     />
                     <TextInput
-                        placeholder="Password"
                         value={password}
+                        placeholder="Enter Password"
                         secureTextEntry={true}
                         onChangeText={setPassword}
-                        style={{ textAlign: 'center' }}
                         placeholderTextColor='lightgrey'
+                        style={{ textAlign: 'center', color: 'black' }}
                     />
                     <TextInput
-                        placeholder="Phone Number"
                         value={phone}
                         onChangeText={setPhone}
+                        placeholder="Enter a Phone Number"
                         placeholderTextColor='lightgrey'
+                        style={{ textAlign: 'center', color: 'black' }}
                     />
 
                     <Button
