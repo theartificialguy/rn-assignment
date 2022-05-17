@@ -4,6 +4,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import { auth, db } from '../firebase/firebase-config';
 import { logout, loading, login } from './reducers/AuthReducer';
+import { setRecords } from './reducers/RealmReducer';
 import SignIn from './Screens/Signin';
 import Loader from './Components/Loader';
 import InputModalScreen from './Components/InputModal';
@@ -11,6 +12,7 @@ import Map from './Components/Map';
 import MapScreen from './Screens/Map';
 import { doc, getDoc } from 'firebase/firestore';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import realm from '../realm-config';
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +46,22 @@ const EntryPoint = () => {
             dispatch(loading(false));
         });
     }, []);
+
+    // initial fetch from realm
+    useEffect(() => {
+        realm.then(realmObject => {
+            const records = realmObject.objects('Record');
+            dispatch(setRecords([...records]));
+
+            // realm listener
+            try {
+                records.addListener(() => dispatch(setRecords([...records])));
+            } catch (error) {
+                console.log('error in realm listener: ', error)
+            }
+        })
+        .catch(err => console.log('error while fetching records from realm: ', err))
+    }, [])
 
     if (authloading) {
         return <Loader />;

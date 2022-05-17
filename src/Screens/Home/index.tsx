@@ -1,5 +1,5 @@
+import React from 'react';
 import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
 import { auth } from '../../../firebase/firebase-config';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
@@ -7,53 +7,15 @@ import { useNavigation } from '@react-navigation/native';
 import Statusbar from '../../Components/Statusbar';
 import styles from './styles';
 import { signOut } from '../../utils/auth';
-import { RecordItem } from '../../models';
 import Record from '../../Components/Record';
-import { createTable, getDBConnection, getRecords } from '../../../db-service';
-import { addRecord } from '../../utils/functions';
 
 const Home = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const user = useSelector(state => state.auth.user);
+    const records = useSelector(state => state.realm.records);
 
-    const [records, setRecords] = useState<RecordItem[]>([]);
-
-    const loadRecords = useCallback(async () => {
-        try {
-            const db = await getDBConnection();
-            await createTable(db);
-
-            const storedRecords = await getRecords(db);
-            if (storedRecords.length) {
-                setRecords(storedRecords);
-            }
-        } catch (error) {
-            console.log('error while loading records: ', error);
-        }
-    }, []);
-
-    useEffect(() => {
-        loadRecords();
-    }, [loadRecords]);
-
-    const handleSubmit = async (
-        name: string,
-        phone: string,
-        coords: object,
-    ) => {
-        const _record = { name, phone, coords };
-        await addRecord(_record, records, setRecords);
-    };
-
-    const renderItem = ({ item }) => (
-        <Record
-            key={item.id}
-            data={item}
-            records={records}
-            setRecords={setRecords}
-        />
-    );
+    const renderItem = ({ item }) => <Record key={item.id} data={item} />;
 
     const goToMapScreen = () => {
         navigation.navigate('MapScreen', { records });
@@ -102,11 +64,7 @@ const Home = () => {
                 <TouchableOpacity
                     activeOpacity={0.6}
                     style={styles.addContainer}
-                    onPress={() =>
-                        navigation.navigate('InputModalScreen', {
-                            onSubmit: handleSubmit,
-                        })
-                    }>
+                    onPress={() => navigation.navigate('InputModalScreen')}>
                     <Text style={styles.add}>+</Text>
                 </TouchableOpacity>
             </View>

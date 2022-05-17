@@ -11,13 +11,13 @@ import {
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
+import { addRecord } from '../../utils/realm-functions';
 import { theme } from '../../utils/theme';
 import Statusbar from '../Statusbar';
 import styles from './styles';
 
-const InputModalScreen = ({ route }) => {
+const InputModalScreen = () => {
     const navigation = useNavigation();
-    const { onSubmit } = route.params;
 
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
@@ -32,7 +32,7 @@ const InputModalScreen = ({ route }) => {
             Alert.alert('Please enter all details.')
             return;
         }
-        onSubmit(name, phone, JSON.stringify(coords));
+        addRecord(name, phone, JSON.stringify(coords))
         handleCancel();
     };
 
