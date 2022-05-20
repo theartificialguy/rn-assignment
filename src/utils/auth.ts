@@ -39,7 +39,6 @@ export const registerUser = (
                     .catch(error => console.log(error));
             })
             .catch(error => console.log('register error: ', error))
-            .finally(() => dispatch(loading(false)));
     };
 };
 
@@ -78,7 +77,6 @@ export const loginUser = (
                     .catch(error => console.log('sign in error: ', error));
             })
             .catch(error => console.log(error.message))
-            .finally(() => dispatch(loading(false)));
     };
 };
 

@@ -11,12 +11,15 @@ export const authSlice = createSlice({
     reducers: {
         register: (state, action) => {
             state.user = action.payload;
+            state.loading = false;
         },
         login: (state, action) => {
             state.user = action.payload;
+            state.loading = false;
         },
         logout: (state) => {
             state.user = null;
+            state.loading = false;
         },
         loading: (state, action) => {
             state.loading = action.payload;

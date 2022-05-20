@@ -40,17 +40,14 @@ const EntryPoint = () => {
                         }
                     })
                     .catch(error => console.log('sign in error: ', error));
-            } else {
-                dispatch(logout());
-            }
-            dispatch(loading(false));
+            } else dispatch(logout());
         });
     }, []);
 
     // initial fetch from realm
     useEffect(() => {
         realm
-        .then(realmObject => {
+            .then(realmObject => {
                 // initial fetch from realm
                 const records = realmObject.objects('Record');
                 dispatch(setRecords([...records]));
