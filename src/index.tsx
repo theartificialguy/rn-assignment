@@ -49,20 +49,25 @@ const EntryPoint = () => {
 
     // initial fetch from realm
     useEffect(() => {
-        realm.then(realmObject => {
-            // initial fetch from realm
-            const records = realmObject.objects('Record');
-            dispatch(setRecords([...records]));
+        realm
+        .then(realmObject => {
+                // initial fetch from realm
+                const records = realmObject.objects('Record');
+                dispatch(setRecords([...records]));
 
-            // realm listener
-            try {
-                records.addListener(() => dispatch(setRecords([...records])));
-            } catch (error) {
-                console.log('error in realm listener: ', error)
-            }
-        })
-        .catch(err => console.log('error while fetching records from realm: ', err))
-    }, [])
+                // realm listener
+                try {
+                    records.addListener(() =>
+                        dispatch(setRecords([...records])),
+                    );
+                } catch (error) {
+                    console.log('error in realm listener: ', error);
+                }
+            })
+            .catch(err =>
+                console.log('error while fetching records from realm: ', err),
+            );
+    }, []);
 
     if (authloading) {
         return <Loader />;
@@ -76,8 +81,11 @@ const EntryPoint = () => {
                 <Stack.Screen name="SignIn" component={SignIn} />
             )}
             <Stack.Screen name="Map" component={Map} />
-            <Stack.Screen name='MapScreen' component={MapScreen} />
-            <Stack.Screen name="InputModalScreen" component={InputModalScreen} />
+            <Stack.Screen name="MapScreen" component={MapScreen} />
+            <Stack.Screen
+                name="InputModalScreen"
+                component={InputModalScreen}
+            />
         </Stack.Navigator>
     );
 };
